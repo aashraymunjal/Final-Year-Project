@@ -9,9 +9,9 @@ import json
 import requests
 
 #load model
-model = model_from_json(open("fer_40.json", "r").read())
+model = model_from_json(open("fer_42_patience_25.json", "r").read())
 #load weights
-model.load_weights('fer_40.h5')
+model.load_weights('fer_42_patience_25.h5')
 
 
 face_haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
