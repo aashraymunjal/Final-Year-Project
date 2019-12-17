@@ -1,0 +1,14 @@
+.avatar {
+    vertical-align: middle;
+    width: 100px;
+    height: 110px;
+    border-radius: 50%;
+    margin: auto;
+  }
+  header
+  {
+    color: crimson;
+    font-family: georgia;
+    text-align: center;
+  }
+  

@@ -1,0 +1,35 @@
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src = "thumbnail.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2 style="color:crimson; font-family: georgia;"><strong>Welcome tester ID : <%=id%> </strong></h2>
+            <p style="color: crimson; font-family: georgia;">You have some work pending!!</p>
+            <hr style="border-top: 3px solid black;">
+            <div class="row" style ="display: flex; flex-wrap: wrap;">
+
+               <%  if(pendingVideos.length === 0) { %>
+                    <h2 style = "text-align: center; color: crimson; font-family: georgia; font-weight: 800;">No pending Videos Left</h2>
+                <%}%>
+
+            <% pendingVideos.forEach(function(video){ %>
+            <div class = "col-md-3 col-sm-6">
+
+
+                <a style = "cursor: pointer;" href = "/predict/<%=video._id%>">
+                    <div class = "thumbnail">
+                        
+                        <img src =  "<%=video.thNail%>" class = "img-responsive"> 
+                        <div class = "caption">
+                          <h4 style = "text-align: center;"><%=video.comedian%></h4>
+                          <p style = "text-align: center; font-size: medium;"><h4 style = "text-align: center;"><%=video.title%></h4></p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+       <% }); %>
+    </body>
+</html>

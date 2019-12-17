@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <link rel = "stylesheet" href="bootstrap.min.css">
+        <link rel = "stylesheet" href = "getStarted.css">
+    </head>
+    <body>
+
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">HassiToPhasi</a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li style = "cursor: pointer;"><a (click)="trigger_about()">About Us</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              </ul>
+            </div>
+          </nav>
+          
+
+
+        <div class="container">
+            <div class="row">
+              <div class="col-xs-4">
+                <header>
+                  <h3>Tester</h3>
+                </header>
+                <div style="width:100%;text-align: center;">
+                  <img
+                    src="https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png"
+                    class="avatar">
+                  <p style="height: 75px;">Get paid for watching videos and recording reactions.</p>
+                  <form action="/testerLogin" method = "GET">
+                  <button class="btn btn-danger" type = "submit">Login</button>
+                  </form>
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <header>
+                  <h3>User</h3>
+                </header>
+                <div style="width:100%;text-align: center;">
+                  <img
+                    src="https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png"
+                    class="avatar">
+                  <p style="height: 75px;">Watch and rate recommended videos and help comedians grow.</p>
+                  <p><button class="btn btn-danger" (click)="trigger_UserLogin()">Login</button></p>
+                  <button class="btn btn-danger">Sign Up</button>
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <header>
+                  <h3>Comedian</h3>
+                </header>
+                <div style="width:100%;text-align: center;">
+                  <img
+                    src="https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png"
+                    class="avatar">
+                  <p style="height: 75px;">Get your content analyzed by the huge amounts of testers we have , Upload the video and
+                    get started.</p>
+                  <p><button class="btn btn-danger" (click)="trigger_ComedianLogin()">Login</button></p>
+                  <button class="btn btn-danger">Sign Up</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+    </body>
+</html>
