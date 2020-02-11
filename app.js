@@ -6,6 +6,15 @@ const spawn = cp.spawn;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const nodemailer = require("nodemailer");
+const sendGridTransport = require("nodemailer-sendgrid-transport");
+
+const transporter = nodemailer.createTransport(sendGridTransport({
+    auth : {
+        api_key : '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'
+    }
+}));
+
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
@@ -147,6 +156,14 @@ app.post("/comedianSignUp",function(req,res){
         }
         passport.authenticate("local")(req,res,function(){
             res.redirect("/comedianLogin");
+            transporter.sendMail({
+                to : req.body.email,
+                from : 'haseetophasee779@gmail.com',
+                subject : 'sign up succeeded',
+                html : '<h1>Sign Up Successfull</h1> <p>This is an automatic generated Email confirming you are now a successfully registered comedian at HaseeToPhasee <p>Welcome to the family</p>'
+            }).catch(err => {
+                console.log("mail error : "+err);
+            });
         });
     });
 });
