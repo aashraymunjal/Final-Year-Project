@@ -5,6 +5,13 @@ const ejs = require("ejs");
 const spawn = cp.spawn;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+
+var passport = require("passport");
+var LocalStrategy = require("passport-local");
+var passportLocalMongoose = require("passport-local-mongoose");
+
+var Comedian = require("./models/comedian");
+
 mongoose.connect("mongodb://localhost/fyp");
 
 const app = express();
@@ -12,6 +19,23 @@ const app = express();
 app.use(bodyParser.json()); 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(Comedian.authenticate()));
+passport.serializeUser(Comedian.serializeUser());
+passport.deserializeUser(Comedian.deserializeUser());
+
+app.use(require("express-session")({
+    secret : "Sanchit is such a good developer",
+    resave : false,
+    saveUninitialized : false
+}));
+
+
+
 
 function videoIdGenerator(link)
 {
@@ -96,6 +120,13 @@ app.get("/comedianLogin",function(req,res)
     res.render("comedianLogin.ejs");
 });
 
+app.post("/comedianLogin",passport.authenticate("local" , {
+    successRedirect : "/comedianForm",
+    failureRedirect : "/comedianLogin"}),function(req,res){
+
+    });
+
+
 app.get("/userSignUp",function(req,res)
 {
     res.render("userSignUp.ejs");
@@ -103,7 +134,21 @@ app.get("/userSignUp",function(req,res)
 
 app.get("/comedianSignUp",function(req,res)
 {
-    res.render("comedianSignUp.ejs");
+    res.render("comedianSignup.ejs");
+});
+
+app.post("/comedianSignUp",function(req,res){
+    //all signUp logic handling.
+    //res.send("regsteration");
+    Comedian.register(new Comedian({username : req.body.username , email : req.body.email}) , req.body.password , function(err,comedian){
+        if(err){
+            console.log(err+"maa k choot");
+            return res.render("/comedianSignUp");
+        }
+        passport.authenticate("local")(req,res,function(){
+            res.redirect("/comedianLogin");
+        });
+    });
 });
 
 app.post("/tester/pendingWork",function(req,res)
@@ -147,7 +192,7 @@ app.post("/comedian/dataUploaded",function(req,res)
         else
         {
             var heading = "Thanks , We have received your data";
-            var message = "This page is just an acknowledgement that your data has been uploaded to our servers , Soon we will get back to you with the feedback on your video from our qualified testers<br>Thanks for connecting with hasee to phasi";
+            var message = "This page is just an acknowledgement that your data has been uploaded to our servers , Soon we will get back to you with the feedback on your video through Email from our qualified testers , Thanks for connecting with hasee to phasee";
             console.log("succesfull upload",video);
             res.render("comedianDataUploaded.ejs",{heading : heading , message : message});
         }
@@ -234,6 +279,10 @@ app.get("comedian/forgotPassword",function(req,res)
     res.render("comedianForgot.ejs");
 });
 
+app.get("/logout",function(req,res){
+    req.logout();
+    res.redirect("/");
+});
 
 app.listen(3000,function()
 {

@@ -49,8 +49,16 @@
                     src="https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png"
                     class="avatar">
                   <p style="height: 75px;">Watch and rate recommended videos and help comedians grow.</p>
-                  <p><button class="btn btn-danger" (click)="trigger_UserLogin()">Login</button></p>
-                  <button class="btn btn-danger">Sign Up</button>
+                  <p>
+                    <form action="/userLogin" method = "GET">
+                    <button class="btn btn-danger" type = "submit">Login</button>
+                    </form>
+                  </p>
+                  <p>
+                    <form action="/userSignUp" method = "GET">
+                    <button class="btn btn-danger" type = "submit">SignUp</button>
+                    </form>
+                  </p>
                 </div>
               </div>
               <div class="col-xs-4">
@@ -63,8 +71,16 @@
                     class="avatar">
                   <p style="height: 75px;">Get your content analyzed by the huge amounts of testers we have , Upload the video and
                     get started.</p>
-                  <p><button class="btn btn-danger" (click)="trigger_ComedianLogin()">Login</button></p>
-                  <button class="btn btn-danger">Sign Up</button>
+                    <p>
+                      <form action="/comedianLogin" method = "GET">
+                      <button class="btn btn-danger" type = "submit">Login</button>
+                      </form>
+                    </p>
+                    <p>
+                      <form action="/comedianSignUp" method = "GET">
+                      <button class="btn btn-danger" type = "submit">SignUp</button>
+                      </form>
+                    </p>
                 </div>
               </div>
             </div>
