@@ -5,6 +5,16 @@ const ejs = require("ejs");
 const spawn = cp.spawn;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cloudinary = require('cloudinary');          // Image and video uploading API
+
+// Cloudinary API config
+
+cloudinary.config({
+	cloud_name: "dtbfdwkge",
+	api_key: "457239481352565",
+	api_secret: "7TYqIpK3v6VaP98LKLW-StMFQGs"
+});
+
 
 const nodemailer = require("nodemailer");
 const sendGridTransport = require("nodemailer-sendgrid-transport");
@@ -245,46 +255,8 @@ app.get("/predict/:vidID", function(req,res)
 
 app.post("/postReaction", function (req, res) {
     var vidID = req.body.id;
-    var reactions = req.body.reactions;
-    var timestamps = req.body.timestamps;
-    console.log(reactions);
-    res.end('abc');
-    var emotions = [
-    {emotion: "happy"   , count: 0},
-    {emotion: "neutral" , count: 0},
-    {emotion: "fear"    , count: 0},
-    {emotion: "surprise", count: 0},
-    {emotion: "angry"   , count: 0},
-    {emotion: "disgust" , count: 0},
-    {emotion: "sad"     , count: 0}
-     ];
-    reactions.forEach(function(reaction) {
-        if(reaction === "happy")
-            emotions[0].count++;
-        else if (reaction === "neutral")
-            emotions[1].count++;
-        else if (reaction === "fear")
-            emotions[2].count++;
-        else if (reaction === "surprise")
-            emotions[3].count++;
-        else if (reaction === "angry")
-            emotions[4].count++;
-        else if (reaction === "disgust")
-            emotions[5].count++;
-        else if (reaction === "sad")
-            emotions[6].count++;
-    });
-
-    var maxEmotion = {};
-    var max_count = 0;
-    emotions.forEach(function(emotion){
-        if(emotion.count > max_count)
-        {
-            max_count = emotion.count;
-            maxEmotion = emotion;
-        }
-    });
-    console.log("Maximum reaction received is : "+maxEmotion.emotion);
+    var tsURL = req.body.tsURL;          // Use these URLS
+    var cpURL = req.body.cpURL;        
 });
 
 app.get("user/forgotPassword",function(req,res)
