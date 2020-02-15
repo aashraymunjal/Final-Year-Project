@@ -256,7 +256,8 @@ app.get("/predict/:vidID", function(req,res)
 app.post("/postReaction", function (req, res) {
     var vidID = req.body.id;
     var tsURL = req.body.tsURL;          // Use these URLS
-    var cpURL = req.body.cpURL;        
+    var cpURL = req.body.cpURL;
+    console.log(vidID,tsURL,cpURL);        
 });
 
 app.get("user/forgotPassword",function(req,res)

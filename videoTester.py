@@ -80,15 +80,15 @@ while True:
         timeseries = sns.stripplot(timestamps, reactions)
         countplot = sns.countplot(reactions)
         timeseries.get_figure().savefig("timeseries.jpg")
-        countplot.get_figure().savefig("countplot.jpg")
         tsURL = cloudinary.uploader.upload("timeseries.jpg")['url']
+        countplot.get_figure().savefig("countplot.jpg")
         cpURL = cloudinary.uploader.upload("countplot.jpg")['url']
         data = {
             'id': vidId,
             'tsURL': tsURL,
             'cpURL': cpURL
         }
-        requests.post(url="localhost:3000/postReaction", data=data)
+        requests.post(url="http://localhost:3000/postReaction", data=data)
         break
 
 cap.release()
