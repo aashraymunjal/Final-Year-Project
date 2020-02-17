@@ -7,11 +7,25 @@ from keras.preprocessing import image
 import time
 import json
 import requests
+import seaborn as sns
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+# cloudinary API config
+cloudinary.config( 
+  cloud_name = "dtbfdwkge", 
+  api_key = "457239481352565", 
+  api_secret = "7TYqIpK3v6VaP98LKLW-StMFQGs" 
+)
+
+# seaborn config
+sns.set()
 
 #load model
-model = model_from_json(open("fer_42_patience_25.json", "r").read())
+model = model_from_json(open("fer_21.json", "r").read())
 #load weights
-model.load_weights('fer_42_patience_25.h5')
+model.load_weights('fer_21.h5')
 
 
 face_haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -61,16 +75,18 @@ while True:
 
 
     if cv2.waitKey(10) == ord('q'):#wait until 'q' key is pressed
-        # json_string = json.dumps(reactions)
-        # print(json_string)
+        timeseries = sns.stripplot(timestamps, reactions)
+        countplot = sns.countplot(reactions)
+        timeseries.get_figure().savefig("timeseries.jpg")
+        countplot.get_figure().savefig("countplot.jpg")
+        tsURL = cloudinary.uploader.upload("timeseries.jpg")['url']
+        cpURL = cloudinary.uploader.upload("countplot.jpg")['url']
         data = {
-            'id': vidId,
-            'reactions' : reactions,
-            'timestamps' : timestamps
+            'vidId': vidId,
+            'tsURL': tsURL,
+            'cpURL' : cpURL
         }
-        r = requests.post(url="http://localhost:3000/postReaction", data=data)
-        resp = r.text
-        print(resp)
+        requests.post(url = "localhost:3000/postReaction", data = data)
         break
 
 cap.release()

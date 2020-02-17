@@ -11,7 +11,7 @@ const sendGridTransport = require("nodemailer-sendgrid-transport");
 
 const transporter = nodemailer.createTransport(sendGridTransport({
     auth : {
-        api_key : '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'
+        api_key : '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'
     }
 }));
 
@@ -155,15 +155,14 @@ app.post("/comedianSignUp",function(req,res){
             return res.render("/comedianSignUp");
         }
         passport.authenticate("local")(req,res,function(){
+           
             res.redirect("/comedianLogin");
             transporter.sendMail({
-                to : req.body.email,
-                from : 'haseetophasee779@gmail.com',
-                subject : 'sign up succeeded',
-                html : '<h1>Sign Up Successfull</h1> <p>This is an automatic generated Email confirming you are now a successfully registered comedian at HaseeToPhasee <p>Welcome to the family</p>'
-            }).catch(err => {
-                console.log("mail error : "+err);
-            });
+                to : 'batrasanchit96@gmail.com',
+                from : 'guptaayush75@gmail.com',
+                subject : 'Hello Ayush',
+                html : '<h1>Aur AAyush</h1> <p>Tu bolta hai main ye nahi kar sakta?? <p>Tujhe bhi sikhaunga</p>'
+            })
         });
     });
 });
@@ -244,47 +243,49 @@ app.get("/predict/:vidID", function(req,res)
 
 
 app.post("/postReaction", function (req, res) {
-    var vidID = req.body.id;
-    var reactions = req.body.reactions;
-    var timestamps = req.body.timestamps;
-    console.log(reactions);
-    res.end('abc');
-    var emotions = [
-    {emotion: "happy"   , count: 0},
-    {emotion: "neutral" , count: 0},
-    {emotion: "fear"    , count: 0},
-    {emotion: "surprise", count: 0},
-    {emotion: "angry"   , count: 0},
-    {emotion: "disgust" , count: 0},
-    {emotion: "sad"     , count: 0}
-     ];
-    reactions.forEach(function(reaction) {
-        if(reaction === "happy")
-            emotions[0].count++;
-        else if (reaction === "neutral")
-            emotions[1].count++;
-        else if (reaction === "fear")
-            emotions[2].count++;
-        else if (reaction === "surprise")
-            emotions[3].count++;
-        else if (reaction === "angry")
-            emotions[4].count++;
-        else if (reaction === "disgust")
-            emotions[5].count++;
-        else if (reaction === "sad")
-            emotions[6].count++;
-    });
+    // var vidID = req.body.id;
+    // var reactions = req.body.reactions;
+    // var timestamps = req.body.timestamps;
+    // console.log(reactions);
+    // res.end('abc');
+    // var emotions = [
+    // {emotion: "happy"   , count: 0},
+    // {emotion: "neutral" , count: 0},
+    // {emotion: "fear"    , count: 0},
+    // {emotion: "surprise", count: 0},
+    // {emotion: "angry"   , count: 0},
+    // {emotion: "disgust" , count: 0},
+    // {emotion: "sad"     , count: 0}
+    //  ];
+    // reactions.forEach(function(reaction) {
+    //     if(reaction === "happy")
+    //         emotions[0].count++;
+    //     else if (reaction === "neutral")
+    //         emotions[1].count++;
+    //     else if (reaction === "fear")
+    //         emotions[2].count++;
+    //     else if (reaction === "surprise")
+    //         emotions[3].count++;
+    //     else if (reaction === "angry")
+    //         emotions[4].count++;
+    //     else if (reaction === "disgust")
+    //         emotions[5].count++;
+    //     else if (reaction === "sad")
+    //         emotions[6].count++;
+    // });
 
-    var maxEmotion = {};
-    var max_count = 0;
-    emotions.forEach(function(emotion){
-        if(emotion.count > max_count)
-        {
-            max_count = emotion.count;
-            maxEmotion = emotion;
-        }
-    });
-    console.log("Maximum reaction received is : "+maxEmotion.emotion);
+    // var maxEmotion = {};
+    // var max_count = 0;
+    // emotions.forEach(function(emotion){
+    //     if(emotion.count > max_count)
+    //     {
+    //         max_count = emotion.count;
+    //         maxEmotion = emotion;
+    //     }
+    // });
+    // console.log("Maximum reaction received is : "+maxEmotion.emotion);
+    console.log("sexyyy");
+    console.log(req.body);
 });
 
 app.get("user/forgotPassword",function(req,res)
