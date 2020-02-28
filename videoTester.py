@@ -6,22 +6,8 @@ from keras.models import model_from_json
 from keras.preprocessing import image
 import time
 import json
-import requests
-import seaborn as sns
-import matplotlib.pyplot as plt
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
-# cloudinary API config
-cloudinary.config(
-    cloud_name="dtbfdwkge",
-    api_key="457239481352565",
-    api_secret="7TYqIpK3v6VaP98LKLW-StMFQGs"
-)
-
-# seaborn config
-sns.set()
+import pickle
+import subprocess
 
 #load model
 model = model_from_json(open("fer_21.json", "r").read())
@@ -77,23 +63,17 @@ while True:
     cv2.imshow('img', resized_img)
     cv2.moveWindow('img', 844, 0)
 
-    if cv2.waitKey(10) == ord('q'):  # wait until 'q' key is pressed
-        plt.figure()
-        timeseries = sns.stripplot(timestamps, reactions)
-        timeseries.get_figure().savefig("timeseries.jpg")
-        tsURL = cloudinary.uploader.upload("timeseries.jpg")['url']
-        plt.figure()
-        countplot = sns.countplot(reactions)
-        countplot.get_figure().savefig("countplot.jpg")
-        cpURL = cloudinary.uploader.upload("countplot.jpg")['url']
-        data = {
-            'id': vidId,
-            'tsURL': tsURL,
-            'cpURL': cpURL
-        }
-        r = requests.post(url="http://localhost:3000/postReaction", data=data)
-        print(r.text)
+    if cv2.waitKey(10) == ord('q'):  # wait until 'q' key is pressed        
         break
 
+datafile = open("dataPickle", "wb")
+data = [vidId, timestamps, reactions]
+pickle.dump(data, datafile)
+datafile.close()
+
 cap.release()
-cv2.destroyAllWindows
+cv2.destroyAllWindows()
+
+process = subprocess.Popen("python processing.py", shell=True)
+time.sleep(30)
+subprocess.Popen("TASKKILL /F /PID {pid} /T".format(pid=process.pid))
